@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Furniture</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+<!--Navbar-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand">Furniture Management</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/viewList">List</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!--End Nav-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto rounded border p-4 m-4">
+            <h2 class="text-center mb-5">Order Furniture</h2>
+            <form method="post" th:object="${book}" onsubmit="return confirm('Successfully Ordered')">
+<!--                <div class="row mb-3">-->
+<!--                    <label class="col-sm-4 col-form-label">ID</label>-->
+<!--                    <div class="col-sm-8">-->
+<!--                        <input readonly class="=form-control-plaintext" th:value="${furniture.id}">-->
+<!--                    </div>-->
+<!--                </div>-->
+                <div class="row mb-3">
+                    <label class="col-sm-4 col-form-label">Customer Name</label>
+                    <div class="col-sm-8">
+                        <input class="=form-control" th:field="${book.customerName}">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="col-sm-4 col-form-label">Quantity</label>
+                    <div class="col-sm-8">
+                        <input class="=form-control" th:field="${book.quantity}">
+                        <p th:if="${#fields.hasErrors('quantity') }" th:errorclass="text-danger" th:errors="${book.quantity}"></p>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-sm-4 col-form-label">Date</label>
+                    <div class="col-sm-8">
+<!--                        <input type="text" id="datepicker" class="=form-control" th:field="${book.date}">-->
+                        <input type="date" id="bookingDate" name="bookingDate" min="<%= minDate %>" th:field="${book.date}"/>
+                        <p th:if="${#fields.hasErrors('date') }" th:errorclass="text-danger" th:errors="${book.date}"></p>
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="offset-sm-4 col-sm-4 d-grid">
+                        <button type="submit" class="btn btn-primary" >Order</button>
+                    </div>
+                </div>
+            </form>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.en-GB.min.js"></script>
+            <script type="text/javascript">
+<!--                $(document).ready(function() {-->
+<!--                    $('#datepicker').bookingDate({-->
+<!--                        startDate: new Date()-->
+<!--                        // Set the startDate option to today's date-->
+<!--                    });-->
+<!--                });-->
+<!--                $(document).ready(function() {-->
+<!--    // Get the minimum date from the 'minDate' attribute-->
+<!--    var minDate = $('#bookingDate').attr('min');-->
+<!--    startDate: new Date()-->
+
+<!--    // Set the minimum date for the date picker-->
+<!--    $('#bookingDate').attr('min', minDate);-->
+<!--});-->
+                var bookingDateInput = document.getElementById('bookingDate');
+
+    // Get today's date
+    var today = new Date();
+
+    // Format today's date in YYYY-MM-DD format
+    var year = today.getFullYear();
+    var month = (today.getMonth() + 1 < 10) ? '0' + (today.getMonth() + 1) : today.getMonth() + 1;
+    var day = (today.getDate() < 10) ? '0' + today.getDate() : today.getDate();
+    var formattedToday = year + '-' + month + '-' + day;
+
+    // Set the minimum date attribute of the input element to today's date
+    bookingDateInput.setAttribute('min', formattedToday);});
+            </script>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
